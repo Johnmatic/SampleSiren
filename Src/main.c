@@ -203,7 +203,7 @@ static void MX_NVIC_Init(void);
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
 
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	if(htim->Instance == TIM6) {
 		if (CountUp == 1) {
 			OscClk += 0.1;
@@ -216,17 +216,17 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	}
 }
 
-void HAL_SAI_TxHalfCpltCallback(SAI_HandleTypeDef* hsai){
+void HAL_SAI_TxHalfCpltCallback(SAI_HandleTypeDef* hsai) {
 	HAL_GPIO_TogglePin(LED4_GPIO_Port, LED4_Pin);
 	BuffPointer = 0;
 }
 
-void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef* hsai){
+void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef* hsai) {
 	HAL_GPIO_TogglePin(LED3_GPIO_Port, LED3_Pin);
 	BuffPointer = AUDIO_BUFFER_SIZE / 2;
 }
 
-void HAL_SAI_ErrorCallback (SAI_HandleTypeDef* hsai)	{
+void HAL_SAI_ErrorCallback (SAI_HandleTypeDef* hsai) {
 	HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
 }
 
@@ -339,7 +339,7 @@ int main(void)
 	  volume = Pots[2] / 4096.0;
 
 	  for (int i = 0; i < AUDIO_BUFFER_SIZE / 2; i++){
-		  int16_t temp = volume * SineTable[(int)(959 * ((double)k/Freq))] - 32768;
+		  int16_t temp = volume * SineTable[(int)(959 * ((double)k / Freq))] - 32768;
 		  AudioBuffer[i + position] = temp;
 		  AudioBuffer[++i + position] = temp; //duplicate every sample for both channels
 		  k++;
@@ -354,7 +354,7 @@ int main(void)
 	  if(BuffPointer == -1) {
 		  HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_SET);
 	  }
-	  else HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_RESET);
+	  //else HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_RESET);
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
